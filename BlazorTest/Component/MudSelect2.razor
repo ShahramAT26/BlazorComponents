@@ -206,8 +206,6 @@
         }
         else
         {
-            var rete = GroupField(Options.First()).Contains(_searchTerm);
-
             _dataSource = Options
                 .Where(w => (string.IsNullOrEmpty(_searchTerm) || w.GetFieldValue(TextField).Contains(_searchTerm)) ||
                             (string.IsNullOrEmpty(_searchTerm) || GroupField is null || GroupField(w).Contains(_searchTerm))).ToList();
