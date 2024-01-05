@@ -1,0 +1,89 @@
+﻿@page "/"
+
+@using BlazorTest.Component
+@using BlazorTest.Infrastructure
+@using BlazorTest.Models
+@using MudBlazor
+
+<PageTitle>Home</PageTitle>
+
+<EditForm Model="model" @ref="@_form">
+
+
+    <MudPaper Class="pa-4 mb-4">
+        <MudSelect2 TModel="Pizza"
+                    TextField="@nameof(Pizza.Name)"
+                    Options="@pizzas"
+                    @bind-SelectedValues="@model.SelectedPizzas"
+                    MultiSelect="true"
+                    Label="Pizzas"
+                    Margin="Margin.Dense"
+                    GroupField="@(p => p.Group)" />
+
+        <MudList>
+            <MudListSubheader>Selected Pizzas</MudListSubheader>
+            @foreach (Pizza item in model.SelectedPizzas)
+            {
+                <MudListItem Text="@item.Name" />
+            }
+        </MudList>
+    </MudPaper>
+
+@* 
+
+    <MudPaper Class="pa-4 mb-4">
+        <MudSelect2 TModel="@string"
+                    Options="@strings"
+                    @bind-SelectedValues="@model.SelectedTitle"
+                    MultiSelect="true"
+                    Label="Strings" />
+
+        <MudList>
+            @foreach (string item in model.SelectedTitle)
+            {
+                <MudListItem Text="@item" />
+            }
+        </MudList>
+    </MudPaper>
+
+    <MudPaper Class="pa-4 mb-4">
+        <MudSelect2 TModel="@CustomerTypes"
+                    MultiSelect="true"
+                    @bind-SelectedValues="@model.CustomerTypes"
+                    Label="Enums" />
+
+        <MudList>
+            @foreach (CustomerTypes item in model.CustomerTypes)
+            {
+                <MudListItem Text="@item.ToString()" />
+            }
+        </MudList>
+    </MudPaper>
+ *@
+    <MudPaper>
+        <MudButton IconClass="@Icons.Material.Filled.Save">
+            Save...
+        </MudButton>
+    </MudPaper>
+</EditForm>
+
+@code {
+    EditForm _form;
+
+    CustomerTypesPizzaSelection model = new CustomerTypesPizzaSelection();
+
+    List<Pizza> pizzas = new List<Pizza>
+    {
+        new Pizza(1, "Pepperoni", "Hot"),
+        new Pizza(2, "Margarita", "Cheesy"),
+        new Pizza(3, "Italiano", "Cheesy")
+    };
+
+    List<string> strings = new List<string>
+    {
+        "String.1",
+        "String.2",
+        "String.3",
+        "String.4"
+    };
+}

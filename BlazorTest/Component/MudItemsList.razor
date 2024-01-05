@@ -1,0 +1,11 @@
+﻿@typeparam TModel
+
+
+
+@code{
+    [Parameter, EditorRequired]
+    public string GroupTitle { get; set; } = "";
+
+    [Parameter, EditorRequired]
+    public List<TModel> Values { get; set; } = new List<TModel>();
+}
