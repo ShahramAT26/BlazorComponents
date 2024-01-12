@@ -1,0 +1,40 @@
+﻿@using BlazorTest.Infrastucture.AOP.Progress
+@using MudBlazor
+
+<MudOverlay @bind-Visible="@_isVisible"
+            DarkBackground="true"
+            AutoClose="true"
+            Class="z-100">
+
+    <MudText @bind-Visible="_isVisible" Align="Align.Center"
+             Class="position-absolute fw-bold d-flex align-items-center p-3"
+             Style="color: whitesmoke; font-size: 16px; background-color: #525252a8; border-radius: 4px;">
+
+        <MudInputLabel Style="width: 150px">ارتباط با سرور</MudInputLabel>
+        <MudProgressCircular Color="Color.Success" Size="Size.Large" Indeterminate="true" Class="d-inline-block" />
+
+    </MudText>
+
+</MudOverlay>
+
+@code {
+    bool _isVisible = false;
+
+    protected override void OnInitialized()
+    {
+        ProgressComponentProvider.OnShow += () =>
+        {
+            _isVisible = true;
+            StateHasChanged();
+        };
+
+        ProgressComponentProvider.OnHide += () =>
+        {
+            _isVisible = false;
+            StateHasChanged();
+        };
+    }
+}
+
+
+

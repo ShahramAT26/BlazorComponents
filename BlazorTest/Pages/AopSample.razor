@@ -1,0 +1,50 @@
+﻿@page "/aop-spinner"
+@using BlazorTest.Infrastucture.AOP.Progress
+@using MudBlazor
+
+<div class="row d-flex justify-content-center">
+    <MudButton Variant="Variant.Outlined"
+               Color="Color.Success"
+               Size="Size.Medium"
+               Style="width: 170px">
+
+        <MudText Class="ms-2">
+            <b>Number:</b> @_counter
+        </MudText>
+
+    </MudButton>
+</div>
+
+@code {
+    int _counter;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // PeriodicTimer timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+        // while (await timer.WaitForNextTickAsync())
+        // {
+        //     _counter += 1;
+        //     await InvokeAsync(() => StateHasChanged());
+
+        //     if (_counter == 5)
+        //     {
+        //         timer.Dispose();
+        //     }
+        // }
+
+        A();
+        B();
+    }
+
+    [Progress]
+    async Task A()
+    {
+        await Task.Delay(10000);
+    }
+
+    [Progress]
+    async Task B()
+    {
+        await Task.Delay(2000);
+    }
+}
