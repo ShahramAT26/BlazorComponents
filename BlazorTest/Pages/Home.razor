@@ -5,12 +5,15 @@
 @using BlazorTest.Models
 @using MudBlazor
 
+@inject ISnackbar Snackbar
+
 <PageTitle>Home</PageTitle>
 
-<EditForm Model="model" @ref="@_form">
+<EditForm Model="model" @ref="@_form" OnValidSubmit="@A">
 
+    <DataAnnotationsValidator />
 
-    <MudPaper Class="pa-4 mb-4">
+   @*  <MudPaper Class="pa-4 mb-4">
         <MudSelect2 TModel="Pizza"
                     TextField="@nameof(Pizza.Name)"
                     Options="@pizzas"
@@ -44,27 +47,25 @@
                 <MudListItem Text="@item" />
             }
         </MudList>
-    </MudPaper>
+    </MudPaper> *@
 
-    <MudPaper Class="pa-4 mb-4">
-        <MudSelect2 TModel="@CustomerTypes"
-                    MultiSelect="true"
-                    @bind-SelectedValues="@model.CustomerTypes"
-                    Label="Enums" />
 
-        <MudList>
-            @foreach (CustomerTypes item in model.CustomerTypes)
-            {
-                <MudListItem Text="@item.ToString()" />
-            }
-        </MudList>
-    </MudPaper>
+        <MudPaper Class="pa-4 mb-4">
+            <MudSelect2 TModel="@(CustomerTypes?)"
+                        MultiSelect="false"
+                        @bind-SelectedValue="@model.CustomerType"
+                        Label="Enums" />
 
-    <MudPaper>
+            <ValidationMessage For="() => model.CustomerType"/>
+        </MudPaper>
+
+        <button type="submit">Submit Form</button>
+
+    @* <MudPaper>
         <MudButton IconClass="@Icons.Material.Filled.Save">
             Save...
         </MudButton>
-    </MudPaper>
+    </MudPaper> *@
 </EditForm>
 
 @code {
@@ -86,4 +87,10 @@
         "String.3",
         "String.4"
     };
+
+    void A(EditContext context)
+    {
+        var s = 1;
+        Snackbar.Add("Model Is Valid", Severity.Success);
+    }
 }

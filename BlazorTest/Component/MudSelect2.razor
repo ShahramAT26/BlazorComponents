@@ -160,9 +160,10 @@
     {
         if (!_valuesIsSet)
         {
-            if (typeof(TModel).IsEnum)
+            Type baseType = Nullable.GetUnderlyingType(typeof(TModel)) ?? typeof(TModel);
+            if (baseType.IsEnum)
             {
-                _dataSource = Options = Enum.GetValues(typeof(TModel)).Cast<TModel>().ToList();
+                _dataSource = Options = Enum.GetValues(baseType).Cast<TModel>().ToList();
             }
             else
             {
@@ -211,8 +212,10 @@
         else
         {
             _dataSource = Options
-                .Where(w => (string.IsNullOrEmpty(_searchTerm) || w.GetFieldValue(TextField).Contains(_searchTerm)) ||
-                            (string.IsNullOrEmpty(_searchTerm) || GroupField is null || GroupField(w).Contains(_searchTerm))).ToList();
+                .Where(w => (string.IsNullOrEmpty(_searchTerm) || w.GetFieldValue(TextField).Contains(_searchTerm)))
+                .ToList();
+            // ||
+                //             (string.IsNullOrEmpty(_searchTerm) || GroupField is null || GroupField(w).Contains(_searchTerm))).ToList();
         }
 
         _groupedDataSource = GroupedDataSource;

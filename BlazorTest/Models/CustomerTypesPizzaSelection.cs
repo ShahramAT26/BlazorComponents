@@ -25,6 +25,9 @@ namespace BlazorTest.Models
         [MinLength(1, ErrorMessage = "Select CustomerTypes")]
         public IEnumerable<CustomerTypes> CustomerTypes { get; set; }
 
+        [Required(ErrorMessage = "Field Is Required")]
+        public CustomerTypes? CustomerType { get; set; }
+
         [MinLength(1, ErrorMessage = "Select Titles")]
         public IEnumerable<string> SelectedTitle { get; set; }
     }
